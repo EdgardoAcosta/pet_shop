@@ -18,7 +18,7 @@ function get_user(req,res,user,password) {
             sess.Name = body.rows[0].value.Name;
             sess.Email =  body.rows[0].value.Email;
             sess.EmTypeail = body.rows[0].value.Type;
-            res.redirect('/');
+
         }
         else {
             console.log(err);
@@ -28,6 +28,7 @@ function get_user(req,res,user,password) {
 
 
 router.get('/', function (req, res, next) {
+    console.log("Login");
     res.render('login', {title: 'Login'});
 
 
