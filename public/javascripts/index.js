@@ -23,7 +23,6 @@ function show_less() {
 function add_product_to_cart(element) {
     var name;
     var value = parseInt($('#num_of_products').text());
-    $('#num_of_products').text(value + 1);
     var element_toadd = $(element).closest('.col-lg-4').attr('id');
     name = $(element).closest('.col-lg-4').find('h4.card-title strong').text();
 
@@ -32,47 +31,29 @@ function add_product_to_cart(element) {
     data.Id_Prod = element_toadd;
     data.Name_Prod = name;
 
+    //POST to add values to cart
     $.ajax({
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json',
         url: '/',
-        success: function(data) {
-            console.log('success');
-            console.log(JSON.stringify(data));
+        success: function (data) {
 
-            if (data){
-                toastr.success("Added to cart");
+            if (data.session) {
+                if (data.insert) {
+                    toastr.success("Added to cart");
+                    $('#num_of_products').text(value + 1);
+                }
+                else {
+                    toastr.error("We can´t add your product to the cart");
+                }
             }
             else {
-                toastr.error("We can´t add your product to the cart");
+                toastr.warning("Please login first");
             }
         }
-    })
-    /*
-    //CHANGE TO ID OF USER IN SESSION
-    var user = 1;
-    var open = indexedDB.open("pet_shop", 1);
-
-    open.onsuccess = function () {
-        console.log("add_to_cart");
-        // Start a new transaction
-        var db = open.result;
-        var trans = db.transaction("cart", "readwrite");
-        var store = trans.objectStore("cart");
-
-
-        // Add some data
-        store.add({Id:element_toadd,Id_Product: element_toadd,Name:name, Id_User: user,Description: "",Purch_Date: "",Active: "1"});
-
-        // Close the db when the transaction is done
-        trans.oncomplete = function () {
-            db.close();
-        };
-    }
-    */
+    });
 }
-
 
 
 $(document).ready(function () {
@@ -102,10 +83,10 @@ $(document).ready(function () {
 
     $('#row-prod0').show();
     /*
-    $('.pull-left').click(function () {
-        $('#slide-out').css('visibility', 'visible');
-    });
-    */
+     $('.pull-left').click(function () {
+     $('#slide-out').css('visibility', 'visible');
+     });
+     */
 
 
 });

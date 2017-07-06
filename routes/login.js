@@ -13,14 +13,22 @@ function get_user(req,res,user,password) {
     conn.view('user', 'get_user',{ key: [user, password] }, function (err, body) {
         if (!err) {
             //Add values to session
-            sess=req.session;
-            sess.Id =  body.rows[0].value.Id;
-            sess.Name = body.rows[0].value.Name;
-            sess.Email =  body.rows[0].value.Email;
-            sess.EmTypeail = body.rows[0].value.Type;
+            if(body.rows.length > 0) {
+                sess = req.session;
+                sess.Id = body.rows[0].value.Id;
+                sess.Name = body.rows[0].value.Name;
+                sess.Email = body.rows[0].value.Email;
+                sess.EmTypeail = body.rows[0].value.Type;
+                res.redirect("/");
+            }
+            else {
+                res.redirect(sess.Page);
+                //res.send({error:"error"});
+            }
 
         }
         else {
+            res.send({error:"error"});
             console.log(err);
         }
     });
@@ -28,9 +36,15 @@ function get_user(req,res,user,password) {
 
 
 router.get('/', function (req, res, next) {
-    console.log("Login");
-    res.render('login', {title: 'Login'});
+    sess = req.session;
 
+    if (sess.Email){
+        res.redirect("/");
+        next;
+    }
+    else {
+        res.render('login', {title: 'Login', sess: sess});
+    }
 
 });
 router.get('/get_access', function (req, res, next) {
@@ -39,7 +53,6 @@ router.get('/get_access', function (req, res, next) {
         password:req.query.password
     };
     get_user(req,res,response.user,response.password)
-    console.log(response);
 });
 
 module.exports = router;

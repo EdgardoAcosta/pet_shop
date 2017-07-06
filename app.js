@@ -37,6 +37,10 @@ app.use('/cart', cart);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/test', test);
+app.use('/logout',function (req, res, next) {
+    req.session.destroy();
+    res.redirect("/");
+});
 
 
 // catch 404 and forward to error handler

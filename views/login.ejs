@@ -32,8 +32,198 @@
 
 </head>
 <body class="fixed-sn green-skin">
-<% include templates/header.ejs %>
+<!--Double navigation-->
+<header>
+    <% console.log(sess)%>
+    <!-- Sidebar navigation -->
+    <ul id="slide-out" class="side-nav fixed custom-scrollbar">
 
+        <!-- Logo -->
+        <li>
+            <div class="logo-wrapper waves-light">
+                <a href="/"><img src="/images/Logo_Pet_Shop.png" class="img-fluid flex-center"></a>
+            </div>
+        </li>
+        <!--/. Logo -->
+
+        <!--Social-->
+        <li>
+            <ul class="social">
+                <li><a href="https://www.facebook.com/" target="_blank" class="icons-sm fb-ic"><i
+                                class="fa fa-facebook"> </i></a></li>
+                <li><a class="icons-sm git-ic"><i class="fa fa-twitter"> </i></a></li>
+            </ul>
+        </li>
+        <!--/Social-->
+
+        <!--Search Form-->
+        <li>
+            <form class="search-form" role="search">
+                <div class="form-group waves-light">
+                    <input type="text" class="form-control" placeholder="Pesquisa">
+                </div>
+            </form>
+        </li>
+        <!--/.Search Form-->
+
+        <!-- Side navigation links -->
+        <li>
+            <ul class="collapsible collapsible-accordion">
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-diamond"></i> Produtos<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="/#product-list">Vestuário</a></li>
+                            <li><a class="dropdown-item" href="/#product-list">Alimentação</a></li>
+                            <li><a class="dropdown-item" href="/#product-list">Acessórios</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-briefcase"></i> Serviços<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="html/diary.html">Banhos</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de cabelo</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de unhas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a class="waves-effect arrow-r"><i class="fa fa-calendar "></i> Calendário</a></li>
+            </ul>
+        </li>
+        <!--/. Side navigation links -->
+
+    </ul>
+    <!--/. Sidebar navigation -->
+
+    <!--Navbar-->
+    <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+
+        <!-- SideNav slide-out button -->
+        <div class="pull-left">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+        </div>
+
+        <ul class="nav navbar-nav pull-right">
+            <li class="nav-item"><a class="nav-link" href="/cart"> <span class="label pink z-depth-1"
+                                                                         id="num_of_products">0</span> <i
+                            class="fa fa-shopping-cart"></i> <span class="hidden-sm-down">Carrinho</span></a></li>
+            <%
+            if (sess.Email ){
+            %>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="hidden-sm-down"><%=sess.Name%></span></a>
+                <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <a class="dropdown-item" href="#">My account</a>
+                </div>
+            </li>
+            <%}
+            else {
+            %>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-sign-in"></i> <span
+                            class="hidden-sm-down">Iniciar Sessão</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-user-plus"></i> <span
+                            class="hidden-sm-down">Cadastrar-se</span></a></li>
+            <%}%>
+        </ul>
+
+    </nav>
+    <!--/.Navbar-->
+</header>
+<!--/Double navigation-->
+
+<!--Double navigation-->
+<header>
+    <!-- Sidebar navigation -->
+    <ul id="slide-out" class="side-nav fixed custom-scrollbar">
+
+        <!-- Logo -->
+        <li>
+            <div class="logo-wrapper waves-light">
+                <a href="/"><img src="/images/Logo_Pet_Shop.png" class="img-fluid flex-center"></a>
+            </div>
+        </li>
+        <!--/. Logo -->
+
+        <!--Social-->
+        <li>
+            <ul class="social">
+                <li><a href="https://www.facebook.com/" target="_blank" class="icons-sm fb-ic"><i
+                                class="fa fa-facebook"> </i></a></li>
+                <li><a class="icons-sm git-ic"><i class="fa fa-twitter"> </i></a></li>
+            </ul>
+        </li>
+        <!--/Social-->
+
+        <!--Search Form-->
+        <li>
+            <form class="search-form" role="search">
+                <div class="form-group waves-light">
+                    <input type="text" class="form-control" placeholder="Pesquisa">
+                </div>
+            </form>
+        </li>
+        <!--/.Search Form-->
+
+        <!-- Side navigation links -->
+        <li>
+            <ul class="collapsible collapsible-accordion">
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-diamond"></i> Produtos<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="/#product-list">Vestuário</a></li>
+                            <li><a class="dropdown-item" href="/#product-list">Alimentação</a></li>
+                            <li><a class="dropdown-item" href="/#product-list">Acessórios</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-briefcase"></i> Serviços<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="html/diary.html">Banhos</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de cabelo</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de unhas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a class="waves-effect arrow-r"><i class="fa fa-calendar "></i> Calendário</a></li>
+            </ul>
+        </li>
+        <!--/. Side navigation links -->
+
+    </ul>
+    <!--/. Sidebar navigation -->
+
+    <!--Navbar-->
+    <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+
+        <!-- SideNav slide-out button -->
+        <div class="pull-left">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+        </div>
+
+        <ul class="nav navbar-nav pull-right">
+            <li class="nav-item"><a class="nav-link" href="/cart"> <span class="label pink z-depth-1"
+                                                                         id="num_of_products">0</span> <i
+                            class="fa fa-shopping-cart"></i> <span class="hidden-sm-down">Carrinho</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-sign-in"></i> <span
+                            class="hidden-sm-down">Iniciar Sessão</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-user-plus"></i> <span
+                            class="hidden-sm-down">Cadastrar-se</span></a></li>
+
+        </ul>
+
+    </nav>
+    <!--/.Navbar-->
+</header>
+<!--/Double navigation-->
 <!--Main layout-->
 <main>
 
@@ -179,7 +369,7 @@
 
 </main>
 <!--/Main layout-->
-
+<% include templates/footer.ejs %>
 </body>
 <script>
     $(document).ready(function () {
