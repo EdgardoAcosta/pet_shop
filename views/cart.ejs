@@ -30,8 +30,9 @@
     <!--Jquery-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 
-    <!--script--
-    <script src="/javascript/cart.js"></script>
+    <!--script-->
+    <script src="/javascripts/cart.js"></script>
+
     <!--Toaster-->
     <link href="/assets/toastr/toastr.css" rel="stylesheet"/>
     <script src="/assets/toastr/toastr.min.js"></script>
@@ -180,10 +181,12 @@
                                 <td><span class="quantity">1</span>
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">
-                                            <input type="radio" name="quantity" onclick="rest_quantity(this)"> -
+                                            <input type="radio" name="quantity" onclick="rest_quantity(this)">
+                                            -
                                         </label>
                                         <label class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">
-                                            <input type="radio" name="quantity" onclick="add_quantity(this)"> +</label>
+                                            <input type="radio" name="quantity" onclick="add_quantity(this);">
+                                            +</label>
                                     </div>
                                 </td>
                                 <td class="total"><%= prod.value.Price %> </td>
@@ -194,16 +197,17 @@
                                     </button>
                                 </td>
                             </tr>
-
                             <%
                             });
+                            %>
+                            <tr id="tr-Total"><td></td><td></td><td></td><td style="text-align: right" >Total</td><td id="total-purch"></td></tr>
+                            <%
                             }
                             else {
                                 //No products
                             }
                             }
                             %>
-
                             </tbody>
                         </table>
                         <!--/,Products table-->

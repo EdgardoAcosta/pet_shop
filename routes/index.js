@@ -39,7 +39,7 @@ function get_products(res, sess) {
 function insert_to_cart(req, res, prod) {
     var json = {};
     if (sess.Cart) {
-        console.log("Cart exist");
+        //console.log("Cart exist");
 
         conn.view('produtos', 'cart', {key: sess.Cart[1]}, function (err, body) {
             if (!err) {
@@ -51,7 +51,7 @@ function insert_to_cart(req, res, prod) {
 
                 });
                 insert.push( {"Id_Prod": prod, "Total": 1});
-                console.log(insert);
+                //console.log(insert);
                 conn.insert(
                     {
                         _rev: sess.Cart[0], _id: sess.Cart[1],
@@ -82,13 +82,13 @@ function insert_to_cart(req, res, prod) {
     }
     else {
         var date = new Date();
-        console.log("Cart don't exist");
+        //console.log("Cart don't exist");
         conn.insert(
             {
                 "products":[ {"Id_Prod": prod, "Total": 1}],
                 "Id_User": sess.Id, "date": date, "Active": "1"
             }, function (err, body) {
-                console.log(body);
+               // console.log(body);
                 if (!err) {
                     sess.Cart = [body.rev, body.id];
                     json = {
