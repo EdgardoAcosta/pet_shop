@@ -4,5 +4,6 @@ $('.fa-instagram').click(function (event) {
 
 $('#photo-file').change(function (event) {
     var text = $(this).val();
-    $('#photo').val(text);
+    var a = text.split("\\");
+    $('#photo').val(a[a.length-1]);
 }); 

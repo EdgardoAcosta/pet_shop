@@ -155,10 +155,6 @@ form {
     padding: 3%;
 }
 
-input[type="file"] {
-    display: none;
-}
-
 label[for="image-pet"] {
     position: relative;
     width: 100%;
@@ -196,3 +192,7 @@ label[for="image-user"] i {
     top: calc(50% - 50px);
 }
 */
+
+input[type="file"] {
+    display: none;
+}
