@@ -6,6 +6,14 @@ var formidable = require('formidable');
 var util = require('util');
 var fs = require('fs');
 
+router.get('/', (req, res, next)=> {
+    let sess = req.session;
+    if (sess.Type == 'admin')
+        res.redirect('/admin/register/admin');
+    else
+        res.redirect('/');
+});
+
 router.get('/register/admin', (req, res, next)=> {
     let sess = req.session;
     if(sess.Type == 'admin')
@@ -22,12 +30,55 @@ router.get('/register/client', (req, res, next) => {
         res.redirect('/');
 });
 
-router.get('/', (req, res, next)=> {
+router.get('/register/product', (req, res, next) => {
     let sess = req.session;
     if (sess.Type == 'admin')
-        res.redirect('/admin/register/admin');
+        res.render('register_product', {title: 'Cadastrar Produto', sess: sess});
     else
         res.redirect('/');
+});
+
+router.post('/register_product', (req, res, next) => {
+    var fields = [];
+    var form = new formidable.IncomingForm();
+
+    form.uploadDir = 'public/images/Categories/';
+
+    form.on('field', (field, value)=> {
+        fields[field] = value;
+    });
+    form.on('file', (name, file)=> {
+        fields[name] = file;
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    });
+
+    form.parse(req);
+
+    form.on('end', function () {
+
+        conn.view('all_users', 'get_clients', {key: fields['id']}, (err, body)=> {
+            if (!err) {
+                if (body.rows.length > 0) {
+                    console.log('Cliente ya registrado');
+                    res.redirect('/admin');
+                } else {
+                    conn.insert({
+                        Id: fields['id'],
+                        Type: fields['tipo'],
+                        Name: fields['nome'],
+                        Description: fields['descricao'],
+                        Price: fields['preco'],
+                        Stock: fields['quantidade'],
+                        Photo: '/images/Users/' + fields['photo']
+                    }, (err, body)=> {
+                        if (!err) {
+                            res.redirect('/admin/register/client');
+                        }                
+                    })
+                }
+            }
+        });
+    });
 });
 
 router.post('/register_client', (req, res, next) => {
