@@ -35,9 +35,6 @@
 </head>
 
 <body class="fixed-sn green-skin">
-<%- //include("templates/header",{sess:sess})    %>
-<% //include templates/header.ejs    %>
-
 <!--Double navigation-->
 <header>
     <!-- Sidebar navigation -->
@@ -50,27 +47,6 @@
             </div>
         </li>
         <!--/. Logo -->
-
-        <!--Social-->
-        <li>
-            <ul class="social">
-                <li><a href="https://www.facebook.com/" target="_blank" class="icons-sm fb-ic"><i
-                                class="fa fa-facebook"> </i></a></li>
-                <li><a class="icons-sm git-ic"><i class="fa fa-twitter"> </i></a></li>
-            </ul>
-        </li>
-        <!--/Social-->
-
-        <!--Search Form-->
-        <li>
-            <form class="search-form" role="search">
-                <div class="form-group waves-light">
-                    <input type="text" class="form-control" placeholder="Pesquisa">
-                </div>
-            </form>
-        </li>
-        <!--/.Search Form-->
-
         <!-- Side navigation links -->
         <li>
             <ul class="collapsible collapsible-accordion">
@@ -78,9 +54,10 @@
                                 class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="dropdown-item" href="/#product-list">Vestuário</a></li>
-                            <li><a class="dropdown-item" href="/#product-list">Alimentação</a></li>
-                            <li><a class="dropdown-item" href="/#product-list">Acessórios</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#cloths').trigger('click');">Vestuário</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#food').trigger('click');">Alimentação</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#accesories').trigger('click');">Acessórios</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#todos').trigger('click');">Todos os produtos</a></li>
                         </ul>
                     </div>
                 </li>
@@ -240,17 +217,17 @@
                 voluptas nostrum quisquam eum porro a pariatur accusamus veniam. Quia, minima?</p>
 
             <!--First row-->
-            <div class="row">
+            <div class="row" >
                 <!--First column-->
-                <div class="col-lg-4 col-md-4 m-b-r wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-lg-3 col-md-3 m-b-r wow fadeInUp" data-wow-delay="0.2s">
                     <!--Collection card-->
-                    <div class="card collection-card z-depth-1-half">
+                    <div class="card collection-card z-depth-1-half" id="products">
                         <!--Card image-->
                         <div class="view  hm-zoom">
                             <img src="/images/Categories/Clothing/logo.png" class="img-fluid" alt="">
 
                             <div class="stripe dark">
-                                <a><p>Vestuário <i class="fa fa-chevron-right"></i></p></a>
+                                <a id="cloths" href="/#products"><p>Vestuário <i class="fa fa-chevron-right"></i></p></a>
                             </div>
                         </div>
                         <!--/.Card image-->
@@ -260,7 +237,7 @@
                 <!--/First column-->
 
                 <!--Second column-->
-                <div class="col-lg-4 col-md-4 m-b-r wow fadeInDown" data-wow-delay="0.2s">
+                <div class="col-lg-3 col-md-3 m-b-r wow fadeInDown" data-wow-delay="0.2s">
                     <!--Collection card-->
                     <div class="card collection-card z-depth-1-half">
                         <!--Card image-->
@@ -268,7 +245,7 @@
                             <img src="/images/Categories/Feeding/principal.png" class="img-fluid" alt="">
 
                             <div class="stripe light">
-                                <a><p>Alimentação <i class="fa fa-chevron-right"></i></p></a>
+                                <a id="food" href="/#products"><p>Alimentação <i class="fa fa-chevron-right"></i></p></a>
                             </div>
                         </div>
                         <!--/.Card image-->
@@ -278,15 +255,15 @@
                 <!--/Second column-->
 
                 <!--Third column-->
-                <div class="col-lg-4 col-md-4 m-b-r wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-lg-3 col-md-3 m-b-r wow fadeInUp" data-wow-delay="0.2s">
                     <!--Collection card-->
                     <div class="card collection-card z-depth-1-half">
                         <!--Card image-->
-                        <div class="view  hm-zoom selected-product">
+                        <div class="view  hm-zoom ">
                             <img src="/images/Categories/Accessories/logo.png" class="img-fluid" alt="">
 
                             <div class="stripe dark">
-                                <a><p>Acessórios <i class="fa fa-chevron-right"></i></p></a>
+                                <a id="accesories" href="/#products"><p>Acessórios <i class="fa fa-chevron-right"></i></p></a>
                             </div>
                         </div>
                         <!--/.Card image-->
@@ -294,6 +271,23 @@
                     <!--/.Collection card-->
                 </div>
                 <!--/Third column-->
+                <!--Fourth column-->
+                <div class="col-lg-3 col-md-3 m-b-r wow fadeInUp" data-wow-delay="0.2s">
+                    <!--Collection card-->
+                    <div class="card collection-card z-depth-1-half">
+                        <!--Card image-->
+                        <div class="view  hm-zoom ">
+                            <img src="/images/Categories/todos.png" class="img-fluid" alt="">
+
+                            <div class="stripe dark">
+                                <a id="todos" href="/#products"><p>Todos<i class="fa fa-chevron-right"></i></p></a>
+                            </div>
+                        </div>
+                        <!--/.Card image-->
+                    </div>
+                    <!--/.Collection card-->
+                </div>
+                <!--/Fourth column-->
             </div>
             <!--/First row-->
         </section>
@@ -377,7 +371,7 @@
                 <% }
                 else{
                 %>
-                <div class="col-lg-4 col-md-6  " id="<%= prod.id %>">
+                <div class="col-lg-4 col-md-6  <%= prod.value.Type %> " id="<%= prod.id %>">
                     <div class="card">
                         <div class="view overlay hm-white-slight">
                             <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>" class="img-fluid"></div>

@@ -85,4 +85,28 @@ $(document).ready(function () {
     });
 
     $('#row-prod0').show();
+
+    $(document).on('click','#cloths',function () {
+        $('.cloths').show();
+        $('.food').hide();
+        $('.accessories').hide();
+
+    });
+    $(document).on('click','#food',function () {
+        $('.cloths').hide();
+        $('.food').show();
+        $('.accessories').hide();
+
+    });
+    $(document).on('click','#accesories',function () {
+        $('.cloths').hide();
+        $('.food').hide();
+        $('.accessories').show();
+
+    });
+    $(document).on('click','#todos',function () {
+        $('.cloths').show();
+        $('.food').show();
+        $('.accessories').show();
+    });
 });
