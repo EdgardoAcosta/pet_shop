@@ -309,29 +309,6 @@
             //Check if json of values exist
             if (typeof products != "undefined") {
                 //If the json have values
-<<<<<<< HEAD
-                if( products.length > 0){
-                    products.forEach(function (prod) {
-                if (cont == 0) {
-                %>
-                <div class="row products_list wow fadeIn" data-wow-delay="0.2s" id='row-prod<%= aux %>' style="display: none">
-                    <div class="col-lg-4 col-md-6 <%= prod.value.Type %>" id="<%= prod.id %>">
-                        <div class="card">
-                            <div class="view overlay hm-white-slight">
-                                <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>"
-                                     class="img-fluid">
-                            </div>
-                            <div class="card-block">
-                                <h4 class="card-title"><strong class="product-name"><%= prod.value.Name %></strong></h4>
-                                <hr>
-                                <p class="card-text"><%= prod.value.Description %></p>
-                                <div class="card-footer">
-                                    <span class="left">Stock: <%= prod.value.Stock %> </span> <span class="right">
-                                <a data-original-title="Adicionar ao carrinho" type="button" data-toggle="tooltip"
-                                   data-placement="top" title="" onclick="add_product_to_cart(this)" class="addcart">
-                                    <i class="fa fa-cart-plus"></i> </a>
-                                 </span></div>
-=======
             if( products.length > 0){
 
             products.forEach(function (prod) {
@@ -393,7 +370,6 @@
                                  </span>
 
                                 <% } %>
->>>>>>> origin/master
                             </div>
                         </div>
                     </div>

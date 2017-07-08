@@ -20,12 +20,6 @@ function get_user(req, res, user, password) {
                 sess.Name = body.rows[0].value.Name;
                 sess.Email = body.rows[0].value.Email;
                 sess.Type = body.rows[0].value.Type;
-<<<<<<< HEAD
-                if (sess.Type == 'user')
-                    res.redirect("/");
-                else
-                    res.redirect("/admin");
-=======
                 conn.view('all_users', 'user_cart', {key: body.rows[0].id}, function (err, usr) {
                     if (!err) {
                         if (usr.rows.length > 0) {
@@ -38,7 +32,6 @@ function get_user(req, res, user, password) {
                     }
                     res.send({status: 0, msg: "Welcome back " + (body.rows[0].value.Name).toUpperCase()});
                 });
->>>>>>> origin/master
             }
             else {
                 res.send({status: 1, msg: "User invalid"});
