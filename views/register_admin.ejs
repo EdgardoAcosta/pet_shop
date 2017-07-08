@@ -1,4 +1,73 @@
-<% include templates/header-adm.ejs %>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <link rel="icon" href="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/698183/1161/773/m1/fpnw/wm0/pet-shop-.png?1444150631&s=5abfd42752dfc67a6903b054b5680d87">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title><%= title %></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/mdb.min.css">
+        <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+    <body class="fixed-sn green-skin">
+        <!-- Double navigation -->
+        <header>
+            <!-- Sidebar navigation -->
+            <ul id="slide-out" class="side-nav fixed custom-scrollbar">
+                <!-- Logo -->
+                <li>
+                    <div class="logo-wrapper waves-light">
+                        <a href="/"><img src="/images/Logo_Pet_Shop.png" alt="Logo" class="img-fluid flex-center"></a>                        
+                    </div>
+                </li>
+                <!-- Social -->
+                <li>
+                    <ul class="social">
+                        <li><a href="https://www.facebook.com/" target="_blank" class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="icons-sm git-ic"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                </li>
+                <!-- Side navigation links -->
+                <li>
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header wave-effect arrow-r"><i class="fa fa-plus-circle"></i>Cadastrar<i class="fa fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a class="dropdown-item" href="/admin/register/admin">Administrador</a></li>
+									<li><a class="dropdown-item" href="/admin/register/client">Cliente</a></li>
+									<li><a class="dropdown-item" href="/admin/register/product">Produto</a></li>
+									<li><a class="dropdown-item" href="/admin/register/service">Serviço</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header wave-effect arrow-r"><i class="fa fa-wrench"></i>Gerenciar<i class="fa fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a class="dropdown-item" href="/admin/manage/products">Produtos</a></li>
+									<li><a class="dropdown-item" href="/admin/manage/services">Serviços</a></li>									
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Navbar -->
+            <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+                <!-- Sidenav slide-out button -->
+                <div class="pull-left">
+                    <a href="#" data-activities="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+                </div>
+                <ul class="nav navbar-nav pull-right">
+                    <li class="nav-item"><a class="nav-link"><i class="fa fa-user-md"></i> <span class="hidden-sm-down"><%= sess.Name %></span></a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link"><i class="fa fa-sign-out"></i> <span class="hidden-sm-down">Fechar sessão</span></a></li>
+                </ul>                
+            </nav>
+        </header>
+    </body>
 <main>
     <br>
     <div class="row">
@@ -11,7 +80,7 @@
                         <h3><i class="fa fa-user-md"></i> Cadastrar administrador:</h3>
                     </div>
                     <!--Body-->                    
-                    <form id="register_admin" method="post" action="/admin/register_admin">
+                    <form id="register_admin" method="post" enctype="multipart/form-data" action="/admin/register_admin">
                         <div class="md-form">
                             <i class="fa fa-user-md prefix"></i>
                             <input type="text" name="id" id="id" class="form-control" placeholder="Id" required>
