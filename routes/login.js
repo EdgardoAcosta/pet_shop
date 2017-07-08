@@ -18,8 +18,11 @@ function get_user(req,res,user,password) {
                 sess.Id = body.rows[0].value.Id;
                 sess.Name = body.rows[0].value.Name;
                 sess.Email = body.rows[0].value.Email;
-                sess.EmTypeail = body.rows[0].value.Type;
-                res.redirect("/");
+                sess.Type = body.rows[0].value.Type;
+                if (sess.Type == 'user')
+                    res.redirect("/");
+                else
+                    res.redirect("/admin");
             }
             else {
                 res.redirect(sess.Page);

@@ -1,0 +1,50 @@
+<% include templates/header-adm.ejs %>
+<main>
+    <br>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">                    
+            <!--Form with header-->
+            <div class="card">
+                <div class="card-block">	
+                    <!--Header-->
+                    <div class="form-header green-gradient">
+                        <h3><i class="fa fa-user-md"></i> Cadastrar administrador:</h3>
+                    </div>
+                    <!--Body-->                    
+                    <form id="register_admin" method="post" action="/admin/register_admin">
+                        <div class="md-form">
+                            <i class="fa fa-user-md prefix"></i>
+                            <input type="text" name="id" id="id" class="form-control" placeholder="Id" required>
+                        </div>                    
+                        <div class="md-form">
+                            <i class="fa fa-lock prefix"></i>
+                            <input type="password" name="pass" id="pass" class="form-control" placeholder="Senha" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-pencil prefix"></i>
+                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-instagram prefix" style="cursor: pointer;"></i>
+                            <input type="file" id="photo-file">
+                            <input type="text" name="photo" id="photo" placeholder="Photo" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-phone prefix"></i>
+                            <input type="tel" name="telefone" id="telefone" class="form-control" placeholder="Telefone">
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="text-center offset-lg-5">
+                            <button class="btn btn-dark-green" type="submit" name="reg_admin" id="reg_admin">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--/Form with header-->
+        </div>
+    </div>
+</main>
+<% include templates/footer-adm.ejs %>

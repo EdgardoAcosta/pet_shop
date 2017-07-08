@@ -11,6 +11,7 @@ var cart = require('./routes/cart');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var test = require('./routes/test');
+var admin = require('./routes/admin');
 
 var app = express();
 //Create variable of session
@@ -28,7 +29,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,6 +38,7 @@ app.use('/cart', cart);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/test', test);
+app.use('/admin', admin);
 app.use('/logout',function (req, res, next) {
     req.session.destroy();
     res.redirect("/");
