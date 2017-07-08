@@ -2,8 +2,8 @@
  * Created by edgardoacosta on 22/05/17.
  */
 
+//Update value on click
 function add_quantity(element) {
-    console.log("add");
     var value = "#" + $(element).closest('tr').attr('id');
     var actual_price = parseFloat($(value).closest('tr').find('td.price').text());
     var quiantity = parseInt($(value).closest('tr').find('td span.quantity').text()) + 1;
@@ -22,8 +22,8 @@ function add_quantity(element) {
 
 
 }
+//Update value on click
 function rest_quantity(element) {
-    console.log("rest");
     var value = "#" + $(element).closest('tr').attr('id');
     var actual_price = parseFloat($(value).closest('tr').find('td.price').text());
     var quiantity = parseInt($(value).closest('tr').find('td span.quantity').text()) - 1;
@@ -34,6 +34,7 @@ function rest_quantity(element) {
     $(value).closest('tr').find('td span.quantity').text(quiantity);
     total_purchase()
 }
+//Calculate total value of order
 function total_purchase() {
     var total = $('.total'), sum = 0;
     for (var i = 0; i < total.length; i++) {
@@ -42,82 +43,50 @@ function total_purchase() {
     $('#total-purch').text("$R " + sum);
 
 }
+//Updete pursh and finish proces
 function finish_purch() {
-    var response = confirm("Tu compra sera procesada");
-    var data = [], rowData = {};
-    //CHANGE TO USER ID FROM SESSION
-    var user = 1;
-
-    var id, sum;
-
+    var response = confirm("Ready to order?");
     if (response) {
-        alert("Compra concluida");
-        window.location.replace("/");
-        // toastr.success("purch done");
+        var totol_each, id_prd;
+        $('td span.quantity').each(function () {
+            totol_each = parseInt($(this).text());
+            id_prd = $(this).closest('tr').attr('id');
+            $.ajax({
+                type: 'POST',
+                url: '/cart/stock',
+                data: {id_prd: id_prd, total: totol_each},
+                //Update stock
+                success: function (response) {
+                    console.log("Stock updated");
+                    //End purshe
 
-       /* $.ajax({
-            url: "/cart/endPursh",
-            type: "post",
-            data: {'action': 'update', 'products': data, 'id_user': user},
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    toastr.error("Error finishing order");
+                    //console.log(textStatus, errorThrown);
+                }
+            });
+
+
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/cart',
             success: function (response) {
-                var response = $.parseJSON(response);
-                if (response.success == 1) {
-                    toastr.success("Compra feita");
+                if (response){
+                    toastr.success("Order places");
+                    alert("End of ordering");
+                    window.location.replace("/logout");
                 }
-                else if (response.success == 0) {
-                    toastr.warning(response.msg);
-                }
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
+                toastr.error("Error finishing order");
+                //console.log(textStatus, errorThrown);
             }
-        });*/
-
-
-        /*
-         $("#table-cart tr").not('#tr-Total').each(function () {
-         rowData = {}
-         id = $(this).attr("id");
-         sum = $("#" + id).closest('tr').find('td span.quantity').text();
-         rowData.Id = id;
-         rowData.quantity = sum;
-         data.push(rowData);
-         });
-         if (data.length > 0) {
-
-         }
-         else {
-         toastr.warning("Sem produtos");
-         }
-         */
+        });
     }
-    //toastr.success(response.msg);
-    //window.location.replace("index.html");
-    /*
-     $.post("php/stock.php",{"products":data, "action":"subtract"}, function (response) {
-     }, "json").done(function (response) {
-     console.log(response);
-     if (response.success == 1) {
-
-     //$("#table-cart tr").remove();
-     toastr.success(response.msg);
-     //window.location.replace("index.html");
-     }
-     else {
-     toastr.warning("Error in order");
-     }
-
-     }).fail(function (xhr) {
-     console.log(xhr);
-     });
-     */
-
-
 }
-
 $(document).ready(function () {
-    console.log("Cart.js");
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -135,10 +104,28 @@ $(document).ready(function () {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-
+    total_purchase();
     //Remove row on click of button X
     $(document).on('click', "button.btn-danger", function () {
         var id_pord = $(this).closest('tr').attr('id');
-        $("#" + id_pord).remove();
+        $.ajax({
+            type: 'POST',
+            url: '/cart/update_cart',
+            data: { id_remove : id_pord},
+            success: function (response) {
+                if (response.error == 0){
+                    toastr.success(response.msg);
+                    $("#" + id_pord).remove();
+                }
+                else {
+                    toastr.error(response.msg);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error("Error finishing order");
+            }
+        });
     });
+
+
 });

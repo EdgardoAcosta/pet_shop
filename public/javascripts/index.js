@@ -4,6 +4,7 @@
  * José Richard Tejedo Vega: 10222991
  * */
 
+
 function show_more() {
     var show = document.getElementsByClassName('products_list'), i;
     for (var i = 0; i < show.length; i++) {
@@ -42,7 +43,9 @@ function add_product_to_cart(element) {
             if (data.session) {
                 if (data.insert) {
                     toastr.success("Added to cart");
-                    $('#num_of_products').text(value + 1);
+                    if (value != NaN){
+                        $('#num_of_products').text(value + 1);
+                    }
                 }
                 else {
                     toastr.error("We can´t add your product to the cart");
@@ -82,11 +85,4 @@ $(document).ready(function () {
     });
 
     $('#row-prod0').show();
-    /*
-     $('.pull-left').click(function () {
-     $('#slide-out').css('visibility', 'visible');
-     });
-     */
-
-
 });

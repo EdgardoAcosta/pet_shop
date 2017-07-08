@@ -35,8 +35,8 @@
 </head>
 
 <body class="fixed-sn green-skin">
-<%- //include("templates/header",{sess:sess}) %>
-<% //include templates/header.ejs %>
+<%- //include("templates/header",{sess:sess})    %>
+<% //include templates/header.ejs    %>
 
 <!--Double navigation-->
 <header>
@@ -112,35 +112,44 @@
         </div>
 
         <ul class="nav navbar-nav pull-right">
-            <li class="nav-item"><a class="nav-link" href="/cart"> <span class="label pink z-depth-1"
-                                                                         id="num_of_products">0</span> <i
-                            class="fa fa-shopping-cart"></i> <span class="hidden-sm-down">Carrinho</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">
+                    <% if(sess.Cart){ %>
+                    <% }else { %>
+                    <span class="label pink z-depth-1" id="num_of_products">0</span>
+                    <% } %>
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="hidden-sm-down">Carrinho</span>
+                </a>
+            </li>
             <%
             if (sess.Email ){
             %>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="hidden-sm-down"><%=sess.Name%></span></a>
-                <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span
+                            class="hidden-sm-down"><%= sess.Name %></span></a>
+                <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1"
+                     data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                     <a class="dropdown-item" href="/logout">Logout</a>
                     <a class="dropdown-item" href="#">My account</a>
                 </div>
             </li>
-            <%}
+            <% }
             else {
             %>
             <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-sign-in"></i> <span
                             class="hidden-sm-down">Iniciar Sessão</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-user-plus"></i> <span
                             class="hidden-sm-down">Cadastrar-se</span></a></li>
-            <%}%>
+            <% } %>
         </ul>
 
     </nav>
     <!--/.Navbar-->
 </header>
 <!--/Double navigation-->
-
 
 
 <!--Main layout-->
@@ -296,71 +305,139 @@
             <%
             //console.log(products);
             var cont = 0, aux = 0, items = 0;
+            var car = false;
             //Check if json of values exist
             if (typeof products != "undefined") {
                 //If the json have values
-                if( products.length > 0){
-                    products.forEach(function (prod) {
-                if (cont == 0) {
+            if( products.length > 0){
+
+            products.forEach(function (prod) {
+                car = false;
+            if (cont == 0) {
+            %>
+            <div class="row products_list wow fadeIn" data-wow-delay="0.2s" id='row-prod<%= aux %>'
+                 style="display: none">
+                <div class="col-lg-4 col-md-6 <%= prod.value.Type %>" id="<%= prod.id %>">
+                    <div class="card">
+                        <div class="view overlay hm-white-slight">
+                            <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>"
+                                 class="img-fluid">
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title"><strong class="product-name"><%= prod.value.Name %></strong></h4>
+                            <hr>
+                            <p class="card-text"><%= prod.value.Description %></p>
+                            <div class="card-footer">
+                                <span class="left">Stock: <%= prod.value.Stock %> </span>
+                                <%
+                                if ( parseInt(prod.value.Stock) > 0 ){
+                                    console.log( prod.id);
+
+                                    if (sess.Prods) {
+                                        sess.Prods.forEach(function (incar) {
+                                            if (incar.Id_Prod == prod.id){
+                                              //  console.log("iguales " + prod.value.Name);
+                                                car = true;
+                                            }
+                                        });
+                                    }
+                                    //Item is in car
+                                if(car){
+                                        car = false;
+                                %>
+                                <span class="right"><a href="/cart">Product in cart</a></span>
+
+
+                                <% }
+                                //Item is not in cart
+                                else { %>
+                                <span class="right">
+                                    <a data-original-title="Adicionar ao carrinho" type="button" data-toggle="tooltip"
+                                       data-placement="top" title="" onclick="add_product_to_cart(this)"
+                                       class="addcart">
+                                        <i class="fa fa-cart-plus"></i> </a>
+                                 </span>
+                                <%
+                                }
+                                }
+                                //If item is not in shoping cart
+                                else { %>
+                                <span class="right">
+                                    <a data-original-title="Adicionar ao carrinho" type="button" data-toggle="tooltip"
+                                       data-placement="top" title="" onclick="add_product_to_cart(this)"
+                                       class="addcart">
+                                        <i class="fa fa-cart-plus"></i> </a>
+                                 </span>
+
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }
+                else{
                 %>
-                <div class="row products_list wow fadeIn" data-wow-delay="0.2s" id='row-prod<%= aux %>' style="display: none">
-                    <div class="col-lg-4 col-md-6 <%= prod.value.Type %>" id="<%= prod.id %>">
-                        <div class="card">
-                            <div class="view overlay hm-white-slight">
-                                <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>"
-                                     class="img-fluid">
-                            </div>
-                            <div class="card-block">
-                                <h4 class="card-title"><strong class="product-name"><%= prod.value.Name %></strong></h4>
-                                <hr>
-                                <p class="card-text">prod.value.Description</p>
-                                <div class="card-footer">
-                                    <span class="left">Stock: <%= prod.value.Stock %> </span> <span class="right">
-                                <a data-original-title="Adicionar ao carrinho" type="button" data-toggle="tooltip"
-                                   data-placement="top" title="" onclick="add_product_to_cart(this)" class="addcart">
-                                    <i class="fa fa-cart-plus"></i> </a>
-                                 </span></div>
+                <div class="col-lg-4 col-md-6  " id="<%= prod.id %>">
+                    <div class="card">
+                        <div class="view overlay hm-white-slight">
+                            <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>" class="img-fluid"></div>
+                        <div class="card-block">
+                            <h4 class="card-title"><strong class="product-name"><%= prod.value.Name %></strong></h4>
+                            <hr>
+                            <p class="card-text"><%= prod.value.Description %></p>
+                            <div class="card-footer">
+                                <span class="left">Stock: <%= prod.value.Stock %> </span>
+                                <%
+                                if ( parseInt(prod.value.Stock) > 0 ){
+                                    if (sess.Prods) {
+                                        sess.Prods.forEach(function (incar) {
+                                            if (incar.Id_Prod == prod.id){
+                                                //  console.log("iguales " + prod.value.Name);
+                                                car = true;
+                                            }
+                                        });
+                                    }
+                                    //Item is in car
+                                if(car){
+                                    car = false;
+                                %>
+                                <span class="right"><a href="/cart">Product in cart</a></span>
+
+
+                                <% }
+                                //Item is not in cart
+                                else { %>
+                                <span class="right">
+                                    <a data-original-title="Adicionar ao carrinho" type="button" data-toggle="tooltip"
+                                       data-placement="top" title="" onclick="add_product_to_cart(this)"
+                                       class="addcart">
+                                        <i class="fa fa-cart-plus"></i> </a>
+                                 </span>
+                                <%
+                                }
+                                }
+                                //If item is not in shoping cart
+                                else { %>
+                                <span class="right"><a>Out of stock</a></span>
+
+                                <% } %>
                             </div>
                         </div>
                     </div>
-                    <% }
-                    else{
-                    %>
-                    <div class="col-lg-4 col-md-6  "id="<%= prod.id %>">
-                        <div class="card">
-                            <div class="view overlay hm-white-slight">
-                                <img src="<%= prod.value.Photo %>" alt="<%= prod.value.Name %>" class="img-fluid"></div>
-                            <div class="card-block">
-                                <h4 class="card-title"><strong class="product-name"><%= prod.value.Name %></strong></h4>
-                                <hr>
-                                <p class="card-text"><%= prod.value.Description %></p>
-                                <div class="card-footer">
-                                    <span class="left">Stock: <%= prod.value.Stock %></span>
-                                    <span class="right">
-                                            <a data-original-title="Adicionar ao carrinho" type="button"
-                                               data-toggle="tooltip"
-                                               data-placement="top" title="" onclick="add_product_to_cart(this)"
-                                               class="addcart">
-                                             <i class="fa fa-cart-plus"></i>
-                                            </a>
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                    }
-                        cont++, items++;
-                        //Close row
-                    if (cont >= 3 || products.length == items ) {
-                        aux++;
-                        cont = 0;
-                    %>
                 </div>
                 <%
                 }
+                    cont++, items++;
+                    //Close row
+                if (cont >= 3 || products.length == items ) {
+                    aux++;
+                    cont = 0;
+                %>
+            </div>
+            <%
+            }
 
-                });
+            });
             %>
             <div class="text-xs-center">
                 <button type="button" class="btn light-blue darken-4" onclick="show_more();" id="show-more">Ver

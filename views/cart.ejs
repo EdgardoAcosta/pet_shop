@@ -38,6 +38,7 @@
     <script src="/assets/toastr/toastr.min.js"></script>
 
 </head>
+
 <body class="fixed-sn green-skin">
 
 <!--Double navigation-->
@@ -114,9 +115,11 @@
         </div>
 
         <ul class="nav navbar-nav pull-right">
-            <li class="nav-item"><a class="nav-link" href="/cart"> <span class="label pink z-depth-1"
-                                                                         id="num_of_products">0</span> <i
-                            class="fa fa-shopping-cart"></i> <span class="hidden-sm-down">Carrinho</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <span class="hidden-sm-down">Home</span>
+                </a>
+            </li>
             <%
             if (sess.Email ){
             %>
@@ -173,13 +176,14 @@
                             if( products.length > 0){
                             products.forEach(function (prod) {
                             %>
-                            <tr id="<%= prod.Id %>">
+                            <tr id="<%= prod.id %>">
                                 <td scope="row"><img src="<%= prod.value.Photo %>"
                                                      alt="Prato de cachorro" class="img-fluid z-depth-0"></td>
                                 <td><%= prod.value.Name %></td>
                                 <td class="price"><%= prod.value.Price %></td>
-                                <td><span class="quantity">1</span>
-                                    <div class="btn-group" data-toggle="buttons">
+                                <td>
+                                    <span class="quantity">1</span>/<span class="stock"><%= prod.value.Stock %></span>
+                                    <div class="btn-group">
                                         <label class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">
                                             <input type="radio" name="quantity" onclick="rest_quantity(this)">
                                             -
@@ -200,23 +204,35 @@
                             <%
                             });
                             %>
-                            <tr id="tr-Total"><td></td><td></td><td></td><td style="text-align: right" >Total</td><td id="total-purch"></td></tr>
+                            <tr id="tr-Total">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right">Total</td>
+                                <td id="total-purch"></td>
+                            </tr>
                             <%
                             }
                             else {
                                 //No products
+                            %>
+                            <td colspan="6"><h4>You don't have products in your car pleas to<a href="/">home</a> to add
+                                    products</h4></td>
+
+                            <%
                             }
                             }
                             %>
                             </tbody>
                         </table>
                         <!--/,Products table-->
-
+                        <% if( products.length > 0){ %>
                         <div class="text-xs-center">
                             <a href="#" class="btn light-blue darken-4 waves-effect waves-light"
                                onclick="finish_purch()">Realizar compra</a>
                             <a href="/#product-list" class="white waves-effect waves-light">Continuar pesquisando</a>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
