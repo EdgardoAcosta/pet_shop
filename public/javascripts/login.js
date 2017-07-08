@@ -52,5 +52,33 @@ $(document).ready(function () {
 
 
     });
+    $('#new_user').submit(function (event) {
+        event.preventDefault();
+
+        var datos = $('#new_user').serializeArray();
+        $.get("/login/new_user", datos, function (result) {
+        }, 'json').done(function (result) {
+            //User and Passowrd correct
+            if (result.error == 0) {
+                toastr.success(result.msg);
+                //Delay to show message of welcomeback
+                setTimeout(function () {
+                    window.location.replace("/");
+                }, 200);
+
+            }
+            //On parameter invalid show error
+            else {
+
+                toastr.error(result.msg);
+            }
+
+        }).fail(function (xhr) {
+            //Error in connection
+            toastr.warning(" ", "Error in connection");
+        });
+
+
+    });
 
 });

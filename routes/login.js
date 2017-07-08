@@ -45,6 +45,51 @@ function get_user(req, res, user, password) {
         }
     });
 }
+function new_user(req, res, user) {
+    var id_us = "0";
+    conn.view('all_users', 'count_users', function (err, body) {
+        if (!err) {
+            if ((body.rows).length > 0) {
+                user.Id_User = (body.rows[0].value).toString();
+                conn.insert(user, function (err, insert) {
+                    if (!err) {
+                        console.log(insert);
+                        sess = req.session;
+                        sess.Id = insert.id;
+                        sess.Name = user.Name;
+                        sess.Email = user.Email;
+                        sess.Type = user.Type;
+
+                        res.send({error: 0, msg: "Welcome " + user.Name.toUpperCase()});
+                    }
+                    else {
+                        res.send({error: 1, msg: "Error adding user"});
+                    }
+                });
+            }
+            else {
+                user.Id_User = id_us;
+                conn.insert(user, function (err, body) {
+                    if (!err) {
+                        res.send({error: 0, msg: "Welcome " + user.Name.toUpperCase()});
+                    }
+                    else {
+                        res.send({error: 1, msg: "Error adding user"});
+                    }
+                });
+            }
+
+        }
+        else {
+            res.send({error: 1, msg: "Error adding user"});
+
+        }
+    });
+    console.log(user);
+    /**/
+
+
+}
 
 
 router.get('/', function (req, res, next) {
@@ -63,6 +108,18 @@ router.get('/', function (req, res, next) {
 router.get('/get_access', function (req, res, next) {
 
     get_user(req, res, req.query.id_User, req.query.password)
+});
+router.get('/new_user', function (req, res, next) {
+    var nUser = {
+        "Id_User": "",
+        "Type": req.query.type,
+        "Name": req.query.name,
+        "Email": req.query.email,
+        "Password": req.query.password,
+        "Phone": req.query.phone,
+        "Adress": req.query.address
+    }
+    new_user(req, res, nUser);
 });
 
 module.exports = router;
