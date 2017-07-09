@@ -46,6 +46,95 @@ router.get('/register/service', (req, res, next) => {
         res.redirect('/');
 });
 
+router.get('/manage/products', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'admin') {
+        let products;
+        conn.view('produtos', 'get_all_produtos', (err, body) => {
+            if (!err) {
+                products = body.rows;
+                res.render('manage_products', {title: 'Gerenciar Produtos', products: products, sess: sess});
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/manage/products/edit', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'admin') {
+        let id = req.query.id;
+        conn.view('produtos', 'get_all_produtos', {key: id}, (err, body) => {
+            let product = body.rows[0];
+            console.log(body.rows[0]);
+            res.render('edit_product', {title: 'Editar Produto', product: product, sess: sess});
+        });        
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/manage/products/detail', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'admin') {
+        let id = req.query.id;
+        conn.view('produtos', 'get_all_produtos', {key: id}, (err, body) => {
+            let product = body.rows[0];
+            res.render('detail_product', {title: 'Detalle Produto', product: product, sess: sess});            
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/manage/products/delete', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'admin') {
+        let id = req.query.id;
+        let rev = req.query.rev;
+        conn.destroy(id, rev, (err, body) => {
+            res.redirect('/admin/manage/products');
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/edit_product', (req, res, next) => {
+    var fields = [];
+    var form = new formidable.IncomingForm();
+
+    form.uploadDir = 'public/images/Categories/';
+
+    form.on('field', (field, value)=> {
+        fields[field] = value;
+    });
+    form.on('file', (name, file)=> {
+        fields[name] = file;
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    });
+
+    form.parse(req);
+
+    form.on('end', function () {
+        conn.insert({
+            _rev: fields['rev'],
+            Id_Prod: fields['idProd'],
+            Type: fields['tipo'],
+            Name: fields['nome'],
+            Description: fields['descricao'],
+            Price: fields['preco'],
+            Stock: fields['quantidade'],
+            Photo: '/images/Categories/' + fields['photo']
+        }, fields['id'], (err, body)=> {
+            if (!err) {
+                res.redirect('/admin/manage/products');
+            }                
+        });
+    });
+});
+
 router.post('/register_service', (req, res, next) => {
     var fields = [];
     var form = new formidable.IncomingForm();
@@ -196,5 +285,6 @@ router.post('/register_admin', (req, res, next) => {
         });
     });
 });
+
 
 module.exports = router;
