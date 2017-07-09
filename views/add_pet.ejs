@@ -128,52 +128,49 @@
     <!--/.Navbar-->
 </header>
 <main>
-    <div class="container-fluid">
-        <section>
-            <div class="row">
-                <div class="col-md-12 col-xl-8 offset-xl-2">
-                    <div>
-                        <a href="pets/add?idUser=<%= idUser %>" class="btn btn-floating btn-large purple accent-3" data-original-title="Adicionar pet" type="button" data-toggle="tooltip" data-placement="top" id="add_pet">
-                            <i class="fa fa-plus"></i>
-                        </a>
+    <br>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <!--Form with header-->
+            <div class="card">
+                <div class="card-block">
+                    <!--Header-->
+                    <div class="form-header green-gradient">
+                        <h3><i class="fa fa-paw"></i> Adicionar pet</h3>
                     </div>
-
-                    <h5 class="text-xs-center m-t-3 m-b-2">Seus Pets</h5>
-
-                    <!--Pets table-->
-                    <table class="table product-table">
-                        <thead>
-                            <tr>
-                                <th>Pet</th>
-                                <th class="hidden-sm-down">Nome</th>
-                                <th>Edade</th>
-                                <th>Raça</th>
-                                <th>Ações</th>										
-                            </tr>
-                        </thead>
-                        <tbody id="pets">
-                            <% pets.forEach((pet) => { %>
-                            <tr>
-                                <td><img src="<%= pet.photo %>" alt="Pet"></td>
-                                <td class="hidden-sm-down"><%= pet.name %></td>
-                                <td class="hidden-sm-down"><%= pet.age %> anhos</td>
-                                <td class="hidden-sm-down"><%= pet.rage %></td>
-                                <td>
-                                    <a href="pets/edit?id=<%= pet.id %>" class="btn btn-warning btn-rounded" data-original-title="Editar dados de pet" type="button" data-toggle="tooltip" data-placement="top" title="">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a href="pets/delete?id=<%= pet.id %>&rev=<%= pet.rev %>" class="btn btn-danger btn-rounded del_pet" data-original-title="Remover pet" type="button" data-toggle="tooltip" data-placement="top" title="">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                    <!--/.Pets table-->
+                    <!--Body-->
+                    <form id="adicionar_pet" enctype="multipart/form-data" method="post" action="/client/add_pet" >
+                        <input type="hidden" name="idUser" value="<%= idUser %>">
+                        <div class="md-form">
+                            <i class="fa fa-key prefix"></i>
+                            <input type="text" name="id" id="id" class="form-control" placeholder="Id" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-pencil prefix"></i>
+                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-heart prefix"></i>
+                            <input type="number" name="edade" id="edade" class="form-control" placeholder="Edade" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-qq prefix"></i>
+                            <input type="text" name="raca" id="raca" class="form-control" placeholder="Raça" required>
+                        </div>
+                        <div class="md-form">
+                            <i class="fa fa-instagram prefix" style="cursor: pointer;"></i>
+                            <input type="file" id="photo-file" name="photo-file">
+                            <input type="text" name="photo" id="photo" placeholder="Photo" required>
+                        </div>						   
+                        <div class="text-center offset-lg-5">
+                            <button class="btn btn-dark-green" type="submit" name="add_pet" id="add_pet">Adicionar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+            <!--/Form with header-->
+        </div>
     </div>
 </main>
+<script src="/javascripts/photo.js"></script>
 <% include templates/footer.ejs %>

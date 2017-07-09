@@ -26,59 +26,64 @@ router.get('/pets', (req, res, next) => {
                         pets.push(pet.value);
                 });
                 console.log(pets);
-                res.render('pets', {title: 'O meus pets', pets: pets, sess: sess});
+                res.render('pets', {title: 'O meus pets', pets: pets, idUser: idUser, sess: sess});
             }
         });
     } else
         res.redirect('/');
 });
 
-router.get('/register/admin', (req, res, next)=> {
+router.get('/pets/add', (req, res, next) => {
     let sess = req.session;
-    if(sess.Type == 'admin')
-        res.render('register_admin', {title: 'Cadastrar Administrador', sess: sess});
-    else
+    if (sess.Type == 'user') {
+        let idUser = req.query.idUser;
+        res.render('add_pet', {title: 'Adicionar pet', idUser: idUser, sess: sess});
+    } else 
         res.redirect('/');
 });
 
-router.get('/register/client', (req, res, next) => {
-    let sess = req.session;
-    if(sess.Type == 'admin')
-        res.render('register_client', {title: 'Cadastrar Cliente', sess: sess});
-    else
-        res.redirect('/');
-});
+router.post('/add_pet', (req, res, next) => {
+    var fields = [];
+    var form = new formidable.IncomingForm();
 
-router.get('/register/product', (req, res, next) => {
-    let sess = req.session;
-    if (sess.Type == 'admin')
-        res.render('register_product', {title: 'Cadastrar Produto', sess: sess});
-    else
-        res.redirect('/');
-});
+    form.uploadDir = 'public/images/Pets/';
 
-router.get('/register/service', (req, res, next) => {
-    let sess = req.session;
-    if (sess.Type == 'admin')
-        res.render('register_service', {title: 'Cadastrar Servico', sess: sess});
-    else
-        res.redirect('/');
-});
+    form.on('field', (field, value)=> {
+        fields[field] = value;
+    });
+    form.on('file', (name, file)=> {
+        fields[name] = file;
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    });
 
-router.get('/manage/products', (req, res, next) => {
-    let sess = req.session;
-    if (sess.Type == 'admin') {
-        let products;
-        conn.view('produtos', 'get_all_produtos', (err, body) => {
+    form.parse(req);
+
+    form.on('end', function () {
+
+        conn.view('pet', 'get_pet', {key: fields['id']}, (err, body)=> {
             if (!err) {
-                products = body.rows;
-                res.render('manage_products', {title: 'Gerenciar Produtos', products: products, sess: sess});
+                if (body.rows.length > 0) {
+                    console.log('Pet ja cadastrado');
+                    res.redirect('/client/pets?idUser=' + fields['idUser']);
+                } else {
+                    conn.insert({
+                        Id_Pet: fields['id'],
+                        Name: fields['nome'],
+                        Age: fields['edade'],
+                        Race: fields['raca'],
+                        Photo: '/images/Pets/' + fields['photo'],
+                        Id_User: fields['idUser']
+                    }, (err, body)=> {
+                        if (!err) {
+                            res.redirect('/client/pets/add?idUser=' + fields['idUser']);
+                        }                
+                    })
+                }
             }
         });
-    } else {
-        res.redirect('/');
-    }
+    });
 });
+
 
 router.get('/manage/products/edit', (req, res, next) => {
     let sess = req.session;
