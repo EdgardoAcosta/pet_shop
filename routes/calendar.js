@@ -7,7 +7,7 @@
 'use strict'
 
 var express = require('express');
-var couchdb = require('nano')('http://127.0.0.1:5984'), conn = couchdb.use('pet_shop');
+var couchdb = require('nano')('http://gest:gest@127.0.0.1:5984'), conn = couchdb.use('pet_shop');
 var router = express.Router();
 var url = require('url');
 var session = require('express-session');
