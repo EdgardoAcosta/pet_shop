@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var test = require('./routes/test');
 var admin = require('./routes/admin');
+var calendar = require('./routes/calendar');
 
 var app = express();
 //Create variable of session
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/cart', cart);
+app.use('/calendar', calendar);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/test', test);
