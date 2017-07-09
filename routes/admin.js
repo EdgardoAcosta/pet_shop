@@ -55,28 +55,18 @@ router.post('/register_product', (req, res, next) => {
     form.parse(req);
 
     form.on('end', function () {
-
-        conn.view('all_users', 'get_clients', {key: fields['id']}, (err, body)=> {
+        conn.insert({
+            Id_Prod: fields['id'],
+            Type: fields['tipo'],
+            Name: fields['nome'],
+            Description: fields['descricao'],
+            Price: fields['preco'],
+            Stock: fields['quantidade'],
+            Photo: '/images/Categories/' + fields['photo']
+        }, (err, body)=> {
             if (!err) {
-                if (body.rows.length > 0) {
-                    console.log('Cliente ya registrado');
-                    res.redirect('/admin');
-                } else {
-                    conn.insert({
-                        Id: fields['id'],
-                        Type: fields['tipo'],
-                        Name: fields['nome'],
-                        Description: fields['descricao'],
-                        Price: fields['preco'],
-                        Stock: fields['quantidade'],
-                        Photo: '/images/Users/' + fields['photo']
-                    }, (err, body)=> {
-                        if (!err) {
-                            res.redirect('/admin/register/client');
-                        }                
-                    })
-                }
-            }
+                res.redirect('/admin/register/product');
+            }                
         });
     });
 });
