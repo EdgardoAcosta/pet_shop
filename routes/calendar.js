@@ -7,7 +7,7 @@
 'use strict'
 
 var express = require('express');
-var couchdb = require('nano')('http://127.0.0.1:5984'), conn = couchdb.use('pet_shop');
+var couchdb = require('nano')('http://gest:gest@127.0.0.1:5984'), conn = couchdb.use('pet_shop');
 var router = express.Router();
 var url = require('url');
 var session = require('express-session');
@@ -92,6 +92,17 @@ router.get('/insert', (req, res, next) => {
             console.log(body);
             res.send('done!!!');
         }
+    });
+});
+
+router.get('/delete', (req, res, next) => {
+    let query = url.parse(req.url, true).query, id = query.id, rev = query.rev;
+
+    console.log(id, rev);
+
+    conn.destroy(id, rev, (error, body) => {
+        console.log(body);
+        res.send('done!!!');
     });
 });
 

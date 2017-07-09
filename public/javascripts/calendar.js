@@ -44,6 +44,25 @@ function removeReservation(element) {
     updateCalendar(null);
 }
 
+function deleteService(element) {
+    $.ajax({
+        url: 'http://localhost:3000/calendar/delete',
+        type: 'GET',
+        dataType: 'JSON',
+        crossDomain: true,
+        data: {
+            'id': $(element).data('id'),
+            'rev': $(element).data('rev')
+        }
+    })
+    .done((data) => {
+        $('.calendar-main .date-days .date-row a.selected').click();
+    })
+    .fail((error) => {
+        $('.calendar-main .date-days .date-row a.selected').click();
+    });
+}
+
 function updateCalendar(element) {
     var id_pet = null;
 
@@ -217,25 +236,30 @@ function selectDay() {
                     html += '<td>';
 
                     if (type == 'admin') {
-                        html += '<button class="btn btn-floating waves-effect wave-light orange" type="button" data-toggle="modal" data-target="#pet-modal"' +
+                        html += '<button class="btn btn-floating waves-effect waves-light blue" type="button" data-toggle="modal" data-target="#pet-modal"' +
                                 `data-id="${element.id}" data-rev="${element.rev}" data-calendar="${element.id_calendar}" data-service="${element.id_service}"` +
                                 `data-date="${element.date}" onclick="updateIdCalendar(this)">` +
                                     '<i class="fa fa-pencil"></i>' +
                                 '</button>' +
 
-                                '<button class="btn btn-floating waves-effect wave-light red accent-3" type="button"' +
+                                '<button class="btn btn-floating waves-effect waves-light orange" type="button"' +
                                 `data-id="${element.id}" data-rev="${element.rev}" data-calendar="${element.id_calendar}" data-service="${element.id_service}"` +
                                 `data-date="${element.date}" onclick="removeReservation(this)">` +
-                                    '<i class="fa fa-trash"></i></a>' +
+                                    '<i class="fa fa-times"></i>' +
+                                '</button>' +
+
+                                '<button class="btn btn-floating waves-effect waves-light red accent-3" type="button"' +
+                                `data-id="${element.id}" data-rev="${element.rev}" onclick="deleteService(this)">` +
+                                    '<i class="fa fa-trash"></i>' +
                                 '</button>';
                     } else if (name == user.Name) {
-                        html += '<button class="btn btn-floating waves-effect wave-light blue accent-3" type="button" data-toggle="modal" data-target="#pet-modal"' +
+                        html += '<button class="btn btn-floating waves-effect waves-light blue accent-3" type="button" data-toggle="modal" data-target="#pet-modal"' +
                                 `data-id="${element.id}" data-rev="${element.rev}" data-calendar="${element.id_calendar}" data-service="${element.id_service}"` +
                                 `data-date="${element.date}" onclick="updateIdCalendar(this)">` +
                                     '<i class="fa fa-pencil"></i>' +
                                 '</button>' +
 
-                                '<button class="btn btn-floating waves-effect wave-light red accent-2" type="button"' +
+                                '<button class="btn btn-floating waves-effect waves-light red accent-2" type="button"' +
                                 `data-id="${element.id}" data-rev="${element.rev}" data-calendar="${element.id_calendar}" data-service="${element.id_service}"` +
                                 `data-date="${element.date}" onclick="removeReservation(this)">` +
                                     '<i class="fa fa-times"></i>' +
@@ -244,13 +268,24 @@ function selectDay() {
 
                     html += '</td>';
                 } else if (type) {
-                    html += '<td colspan="3">' +
-                                '<button class="btn btn-floating waves-effect wave-light blue accent-3" type="button" data-toggle="modal" data-target="#pet-modal"' +
+                    html += '<td colspan="2">' +
+                                '<button class="btn btn-floating waves-effect waves-light blue accent-3" type="button" data-toggle="modal" data-target="#pet-modal"' +
                                 `data-id="${element.id}" data-rev="${element.rev}" data-calendar="${element.id_calendar}" data-service="${element.id_service}"` +
                                 `data-date="${element.date}" onclick="updateIdCalendar(this)">` +
                                     '<i class="fa fa-plus fa-2x"></i>' +
                                 '</button>' +
                             '</td>';
+
+                    if (type == 'admin') {
+                        html += '<td>' +
+                                    '<button class="btn btn-floating waves-effect waves-light red accent-3" type="button"' +
+                                    `data-id="${element.id}" data-rev="${element.rev}" onclick="deleteService(this)">` +
+                                        '<i class="fa fa-trash"></i>' +
+                                    '</button>' +
+                                '</td>';
+                    } else {
+                        html += '<td></td>';
+                    }
                 } else {
                     html += '<td colspan="3"></td>';
                 }
