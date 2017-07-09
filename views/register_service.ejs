@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/mdb.min.css">
         <link rel="stylesheet" href="/stylesheets/style.css">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/register_product.css">
     </head>
     <body class="fixed-sn green-skin">
         <!-- Double navigation -->
@@ -77,27 +76,18 @@
                         <div class="card-block">
                             <!--Header-->
                             <div class="form-header green-gradient">
-                                <h3><i class="fa fa-shopping-bag"></i> Cadastrar produto:</h3>
+                                <h3><i class="fa fa-briefcase"></i> Cadastrar serviço:</h3>
                             </div>
-                            <form id="register_product" enctype="multipart/form-data" method="post" action="/admin/register_product">
                             <!--Body-->
+                            <form id="register_service" enctype="multipart/form-data" method="post" action="/admin/register_service">
                                 <div class="md-form">
                                     <i class="fa fa-key prefix"></i>
                                     <input type="text" name="id" id="id" class="form-control" placeholder="Id" required>
-                                </div>
+                                </div>                                
                                 <div class="md-form">
                                     <i class="fa fa-shopping-bag prefix"></i>
-                                    <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required>
-                                </div>
-                                <div class="md-form">
-                                    <i class="fa fa-paw prefix active"></i>			     
-                                    <select class="mdb-select" name="tipo" id="tipo">
-                                        <option value="" disabled selected>Tipo</option>
-                                        <option value="cloths">Vestuário</option>
-                                        <option value="food">Alimentação</option>
-                                        <option value="accessories">Acessórios</option>
-                                    </select>
-                                </div>
+                                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" required>
+                                </div>      
                                 <div class="md-form">
                                     <i class="fa fa-pencil prefix"></i>
                                     <textarea type="text" name="descricao" id="descricao" class="md-textarea" placeholder="Descrição" required></textarea>
@@ -105,18 +95,14 @@
                                 <div class="md-form">
                                     <i class="fa fa-instagram prefix" style="cursor: pointer;"></i>
                                     <input type="file" id="photo-file" name="photo-file">
-                                    <input type="text" name="photo" id="photo" placeholder="Photo" required>
+                                    <input type="text" id="photo" name="photo" placeholder="Photo" required>
                                 </div>
                                 <div class="md-form">
                                     <i class="fa fa-money prefix"></i>
                                     <input type="number" name="preco" id="preco" class="form-control" placeholder="Preço" required>
                                 </div>
-                                <div class="md-form">
-                                    <i class="fa fa-calculator prefix"></i>
-                                    <input type="number" name="quantidade" id="quantidade" class="form-control" placeholder="Quantidade" required>
-                                </div>
                                 <div class="text-center offset-lg-5">
-                                    <button class="btn btn-dark-green" type="submit" id="reg_product" name="reg_product">Cadastrar</button>
+                                    <button class="btn btn-dark-green" type="submit" id="reg_service" name="reg_service">Cadastrar</button>
                                 </div>
                             </form>
                         </div>

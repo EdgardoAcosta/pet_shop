@@ -38,6 +38,45 @@ router.get('/register/product', (req, res, next) => {
         res.redirect('/');
 });
 
+router.get('/register/service', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'admin')
+        res.render('register_service', {title: 'Cadastrar Servico', sess: sess});
+    else
+        res.redirect('/');
+});
+
+router.post('/register_service', (req, res, next) => {
+    var fields = [];
+    var form = new formidable.IncomingForm();
+
+    form.uploadDir = 'public/images/Services/';
+
+    form.on('field', (field, value)=> {
+        fields[field] = value;
+    });
+    form.on('file', (name, file)=> {
+        fields[name] = file;
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    });
+
+    form.parse(req);
+
+    form.on('end', function () {
+        conn.insert({
+            Id_Service: fields['id'],
+            Name: fields['nome'],
+            Description: fields['descricao'],
+            Price: fields['preco'],
+            Photo: '/images/Services/' + fields['photo']
+        }, (err, body)=> {
+            if (!err) {
+                res.redirect('/admin/register/service');
+            }                
+        });
+    });
+});
+
 router.post('/register_product', (req, res, next) => {
     var fields = [];
     var form = new formidable.IncomingForm();
