@@ -26,9 +26,9 @@ router.get('/pets', (req, res, next) => {
                         pets.push(pet.value);
                 });
                 console.log(pets);
+                res.render('pets', {title: 'O meus pets', pets: pets, sess: sess});
             }
         });
-        res.render('pets', {title: 'O meus pets', pets: pets, sess: sess});
     } else
         res.redirect('/');
 });

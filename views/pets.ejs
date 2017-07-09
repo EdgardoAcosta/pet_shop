@@ -126,4 +126,53 @@
     </nav>
     <!--/.Navbar-->
 </header>
+<main>
+    <div class="container-fluid">
+        <section>
+            <div class="row">
+                <div class="col-md-12 col-xl-8 offset-xl-2">
+                    <div>
+                        <a href="#" class="btn btn-floating btn-large purple accent-3" data-original-title="Adicionar pet" type="button" data-toggle="tooltip" data-placement="top" id="add_pet">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                    <h5 class="text-xs-center m-t-3 m-b-2">Seus Pets</h5>
+
+                    <!--Pets table-->
+                    <table class="table product-table">
+                        <thead>
+                            <tr>
+                                <th>Pet</th>
+                                <th class="hidden-sm-down">Nome</th>
+                                <th>Edade</th>
+                                <th>Raça</th>
+                                <th>Ações</th>										
+                            </tr>
+                        </thead>
+                        <tbody id="pets">
+                            <% pets.forEach((pet) => { %>
+                            <tr>
+                                <td><img src="<%= pet.photo %>" alt="Pet"></td>
+                                <td class="hidden-sm-down"><%= pet.name %></td>
+                                <td class="hidden-sm-down"><%= pet.age %> anhos</td>
+                                <td class="hidden-sm-down"><%= pet.rage %></td>
+                                <td>
+                                    <a href="pets/edit?id=<%= pet.id %>" class="btn btn-warning btn-rounded" data-original-title="Editar dados de pet" type="button" data-toggle="tooltip" data-placement="top" title="">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="pets/delete?id=<%= pet.id %>&rev=<%= pet.rev %>" class="btn btn-danger btn-rounded del_pet" data-original-title="Remover pet" type="button" data-toggle="tooltip" data-placement="top" title="">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <!--/.Pets table-->
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 <% include templates/footer-adm.ejs %>
