@@ -95,6 +95,17 @@ router.get('/insert', (req, res, next) => {
     });
 });
 
+router.get('/delete', (req, res, next) => {
+    let query = url.parse(req.url, true).query, id = query.id, rev = query.rev;
+
+    console.log(id, rev);
+
+    conn.destroy(id, rev, (error, body) => {
+        console.log(body);
+        res.send('done!!!');
+    });
+});
+
 router.get('/update', (req, res, next) => {
     let query = url.parse(req.url, true).query, id = query.id, rev = query.rev, id_calendar = query.id_calendar, id_service = query.id_service, id_pet = query.id_pet, date = query.date;
 
