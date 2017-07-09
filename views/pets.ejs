@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- tab image-->
+    <link rel="icon"
+          href="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/698183/1161/773/m1/fpnw/wm0/pet-shop-.png?1444150631&s=5abfd42752dfc67a6903b054b5680d87">
+
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title><%= title %></title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="/stylesheets/mdb.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!--Jquery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+    <!-- Scripts-->
+    <script src="/javascripts/index.js"></script>
+
+    <!--Toaster-->
+    <link href="/assets/toastr/toastr.css" rel="stylesheet"/>
+    <script src="/assets/toastr/toastr.min.js"></script>
+
+
+</head>
+
+<body class="fixed-sn green-skin">
+<!--Double navigation-->
+<header>
+    <!-- Sidebar navigation -->
+    <ul id="slide-out" class="side-nav fixed custom-scrollbar">
+
+        <!-- Logo -->
+        <li>
+            <div class="logo-wrapper waves-light">
+                <a href="/"><img src="/images/Logo_Pet_Shop.png" class="img-fluid flex-center"></a>
+            </div>
+        </li>
+        <!--/. Logo -->
+        <!-- Side navigation links -->
+        <li>
+            <ul class="collapsible collapsible-accordion">
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-diamond"></i> Produtos<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#cloths').trigger('click');">Vestuário</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#food').trigger('click');">Alimentação</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#accesories').trigger('click');">Acessórios</a></li>
+                            <li><a class="dropdown-item" href="/#products" onclick="$('#todos').trigger('click');">Todos os produtos</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-briefcase"></i> Serviços<i
+                                class="fa fa-angle-down rotate-icon"></i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="dropdown-item" href="html/diary.html">Banhos</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de cabelo</a></li>
+                            <li><a class="dropdown-item" href="html/diary.html">Corte de unhas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a class="waves-effect arrow-r"><i class="fa fa-calendar "></i> Calendário</a></li>
+            </ul>
+        </li>
+        <!--/. Side navigation links -->
+
+    </ul>
+    <!--/. Sidebar navigation -->
+
+    <!--Navbar-->
+    <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+
+        <!-- SideNav slide-out button -->
+        <div class="pull-left">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+        </div>
+
+        <ul class="nav navbar-nav pull-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">
+                    <% if(sess.Cart){ %>
+                    <% }else { %>
+                    <span class="label pink z-depth-1" id="num_of_products">0</span>
+                    <% } %>
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="hidden-sm-down">Carrinho</span>
+                </a>
+            </li>
+            <%
+            if (sess.Email ){
+            %>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span
+                            class="hidden-sm-down"><%= sess.Name %></span></a>
+                <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1"
+                     data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <a class="dropdown-item" href="/client/pets?idUser=<%= sess.Id_User %>">My account</a>
+                </div>
+            </li>
+            <% }
+            else {
+            %>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-sign-in"></i> <span
+                            class="hidden-sm-down">Iniciar Sessão</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fa fa-user-plus"></i> <span
+                            class="hidden-sm-down">Cadastrar-se</span></a></li>
+            <% } %>
+        </ul>
+
+    </nav>
+    <!--/.Navbar-->
+</header>
+<% include templates/footer-adm.ejs %>

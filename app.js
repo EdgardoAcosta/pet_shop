@@ -13,6 +13,7 @@ var login = require('./routes/login');
 var test = require('./routes/test');
 var admin = require('./routes/admin');
 var calendar = require('./routes/calendar');
+var client = require('./routes/client');
 
 var app = express();
 //Create variable of session
@@ -41,6 +42,7 @@ app.use('/users', users);
 app.use('/login', login);
 app.use('/test', test);
 app.use('/admin', admin);
+app.use('/client', client);
 app.use('/logout',function (req, res, next) {
     req.session.destroy();
     res.redirect("/");

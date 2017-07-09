@@ -17,6 +17,7 @@ function get_user(req, res, user, password) {
             if (body.rows.length > 0) {
                 sess = req.session;
                 sess.Id = body.rows[0].id;
+                sess.Id_User = body.rows[0].value.Id;
                 sess.Name = body.rows[0].value.Name;
                 sess.Email = body.rows[0].value.Email;
                 sess.Type = body.rows[0].value.Type;
