@@ -42,6 +42,51 @@ router.get('/pets/add', (req, res, next) => {
         res.redirect('/');
 });
 
+router.get('/pets/edit', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'user') {
+        let id = req.query.id;
+        conn.view('pet', 'get_pet', {key: id}, (err, body) => {
+            let pet = body.rows[0];
+            console.log(body.rows[0]);
+            res.render('edit_pet', {title: 'Editar Pet', pet: pet, sess: sess});
+        });        
+    }
+});
+
+router.post('/edit_pet', (req, res, next) => {
+    var fields = [];
+    var form = new formidable.IncomingForm();
+
+    form.uploadDir = 'public/images/Pets/';
+
+    form.on('field', (field, value)=> {
+        fields[field] = value;
+    });
+    form.on('file', (name, file)=> {
+        fields[name] = file;
+        fs.rename(file.path, form.uploadDir + "/" + file.name);
+    });
+
+    form.parse(req);
+
+    form.on('end', function () {
+        conn.insert({
+            _rev: fields['rev'],
+            Id_Pet: fields['id'],
+            Name: fields['nome'],
+            Age: fields['edade'],
+            Race: fields['raca'],
+            Photo: '/images/Pets/' + fields['photo'],
+            Id_User: fields['idUser']
+        }, fields['_id'], (err, body)=> {
+            if (!err) {
+                res.redirect('/client/pets?idUser=' + fields['idUser']);
+            }                
+        });
+    });
+});
+
 router.post('/add_pet', (req, res, next) => {
     var fields = [];
     var form = new formidable.IncomingForm();
@@ -82,34 +127,6 @@ router.post('/add_pet', (req, res, next) => {
             }
         });
     });
-});
-
-
-router.get('/manage/products/edit', (req, res, next) => {
-    let sess = req.session;
-    if (sess.Type == 'admin') {
-        let id = req.query.id;
-        conn.view('produtos', 'get_all_produtos', {key: id}, (err, body) => {
-            let product = body.rows[0];
-            console.log(body.rows[0]);
-            res.render('edit_product', {title: 'Editar Produto', product: product, sess: sess});
-        });        
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.get('/manage/products/detail', (req, res, next) => {
-    let sess = req.session;
-    if (sess.Type == 'admin') {
-        let id = req.query.id;
-        conn.view('produtos', 'get_all_produtos', {key: id}, (err, body) => {
-            let product = body.rows[0];
-            res.render('detail_product', {title: 'Detalle Produto', product: product, sess: sess});            
-        });
-    } else {
-        res.redirect('/');
-    }
 });
 
 router.get('/manage/products/delete', (req, res, next) => {
