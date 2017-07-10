@@ -62,7 +62,7 @@
                     </div>
                 </li>
 
-               <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-briefcase"></i> Serviços<i
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-briefcase"></i> Serviços<i
                                 class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
@@ -110,8 +110,8 @@
                 <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1"
                      data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                     <a class="dropdown-item" href="/logout">Logout</a>
-                    <a class="dropdown-item" href="/client/pets?idUser=<%= sess.Id_User %>">Minha conta</a>
-                    <a class="dropdown-item" href="/client/edit?idUser=<%= sess.Id_User %>">O meus pets</a>
+                    <a class="dropdown-item" href="/client/edit?idUser=<%= sess.Id_User %>">Minha conta</a>
+                    <a class="dropdown-item" href="/client/pets?idUser=<%= sess.Id_User %>">O meus pets</a>
                 </div>
             </li>
             <% }
@@ -128,48 +128,55 @@
     <!--/.Navbar-->
 </header>
 <main>
-    <br>
-    <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-            <!--Form with header-->
-            <div class="card">
-                <div class="card-block">
-                    <!--Header-->
-                    <div class="form-header green-gradient">
-                        <h3><i class="fa fa-paw"></i> Editar pet</h3>
+<br>
+<div class="row">
+    <div class="col-lg-6 offset-lg-3">                
+        <!--Form with header-->
+        <div class="card">
+            <div class="card-block">
+                <!--Header-->
+                <div class="form-header green-gradient">
+                    <h3><i class="fa fa-user"></i> Editar informação:</h3>
+                </div>
+                <!--Body-->
+                <form id="edit_user" enctype="multipart/form-data" method="post" action="/client/edit_user">
+                    <input type="hidden" name="id" value="<%= user.id %>">
+                    <input type="hidden" name="idUser" value="<%= user.value.Id %>">
+                    <input type="hidden" name="rev" value="<%= user.value.rev %>">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<%= user.value.Email %>" required>
                     </div>
-                    <!--Body-->
-                    <form id="edit_pet" enctype="multipart/form-data" method="post" action="/client/edit_pet">				      
-                        <input type="hidden" name="_id" value="<%= pet.id %>">  
-                        <input type="hidden" name="id" value="<%= pet.value.id %>">  
-                        <input type="hidden" name="idUser" value="<%= pet.value.id_user %>">
-                        <input type="hidden" name="rev" value="<%= pet.value.rev %>">  
-                        <div class="md-form">
-                            <i class="fa fa-pencil prefix"></i>
-                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" value="<%= pet.value.name %>" required>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-heart prefix"></i>
-                            <input type="number" name="edade" id="edade" class="form-control" placeholder="Edade" value="<%= pet.value.age %>" required>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-qq prefix"></i>
-                            <input type="text" name="raca" id="raca" class="form-control" placeholder="Raça" value="<%= pet.value.rage %>" required>
-                        </div>
-                        <div class="md-form">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="password" name="pass" id="pass" class="form-control" placeholder="Senha" required>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-pencil prefix"></i>
+                        <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" value="<%= user.value.Name %>" required>
+                    </div>
+                    <div class="md-form">
                             <i class="fa fa-instagram prefix" style="cursor: pointer;"></i>
                             <input type="file" id="photo-file" name="photo-file">
                             <input type="text" name="photo" id="photo" placeholder="Photo" required>
-                        </div>						   
-                        <div class="text-center offset-lg-5">
-                            <button class="btn btn-dark-green" type="submit" name="add_pet" id="ed_pet">Editar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-phone prefix"></i>
+                        <input type="text" name="telefone" id="telefone" class="form-control" placeholder="Telefone" value="<%= user.value.Phone %>">
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-home prefix"></i>
+                        <input type="text" name="endereco" id="endereco" class="form-control" placeholder="Endereço" value="<%= user.value.Address %>" required>
+                    </div>
+                    <div class="text-center offset-lg-5">
+                        <button class="btn btn-dark-green" type="submit" name="ed_user" id="ed_user">Editar</button>
+                    </div>
+                </form>
             </div>
-            <!--/Form with header-->
         </div>
+        <!--/Form with header-->
     </div>
+</div>
 </main>
 <script src="/javascripts/photo.js"></script>
 <% include templates/footer.ejs %>

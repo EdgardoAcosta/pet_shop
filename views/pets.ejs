@@ -66,13 +66,13 @@
                                 class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="dropdown-item" href="html/diary.html">Banhos</a></li>
-                            <li><a class="dropdown-item" href="html/diary.html">Corte de cabelo</a></li>
-                            <li><a class="dropdown-item" href="html/diary.html">Corte de unhas</a></li>
+                            <li><a class="dropdown-item" href="/calendar">Banhos</a></li>
+                            <li><a class="dropdown-item" href="/calendar">Corte de cabelo</a></li>
+                            <li><a class="dropdown-item" href="/calendar">Corte de unhas</a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a class="waves-effect arrow-r"><i class="fa fa-calendar "></i> Calendário</a></li>
+                <li><a href="/calendar" class="waves-effect arrow-r"><i class="fa fa-calendar "></i> Calendário</a></li>
             </ul>
         </li>
         <!--/. Side navigation links -->
@@ -110,7 +110,7 @@
                 <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1"
                      data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                     <a class="dropdown-item" href="/logout">Logout</a>
-                    <a class="dropdown-item" href="/client/pets?idUser=<%= sess.Id_User %>">Minha conta</a>
+                    <a class="dropdown-item" href="/client/edit?idUser=<%= sess.Id_User %>">Minha conta</a>
                     <a class="dropdown-item" href="/client/pets?idUser=<%= sess.Id_User %>">O meus pets</a>
                 </div>
             </li>
