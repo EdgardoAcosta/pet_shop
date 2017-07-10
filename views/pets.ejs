@@ -154,15 +154,15 @@
                         <tbody id="pets">
                             <% pets.forEach((pet) => { %>
                             <tr>
-                                <td><img src="<%= pet.photo %>" alt="Pet"></td>
-                                <td class="hidden-sm-down"><%= pet.name %></td>
-                                <td class="hidden-sm-down"><%= pet.age %> anhos</td>
-                                <td class="hidden-sm-down"><%= pet.rage %></td>
+                                <td><img src="<%= pet.value.photo %>" alt="Pet"></td>
+                                <td class="hidden-sm-down"><%= pet.value.name %></td>
+                                <td class="hidden-sm-down"><%= pet.value.age %> anhos</td>
+                                <td class="hidden-sm-down"><%= pet.value.rage %></td>
                                 <td>
-                                    <a href="pets/edit?id=<%= pet.id %>" class="btn btn-warning btn-rounded" data-original-title="Editar dados de pet" type="button" data-toggle="tooltip" data-placement="top" title="">
+                                    <a href="pets/edit?id=<%= pet.value.id %>" class="btn btn-warning btn-rounded" data-original-title="Editar dados de pet" type="button" data-toggle="tooltip" data-placement="top" title="">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="pets/delete?id=<%= pet.id %>&rev=<%= pet.rev %>" class="btn btn-danger btn-rounded del_pet" data-original-title="Remover pet" type="button" data-toggle="tooltip" data-placement="top" title="">
+                                    <a href="pets/delete?id=<%= pet.id %>&rev=<%= pet.value.rev %>&idUser=<%= pet.value.id_user %>" class="btn btn-danger btn-rounded del_pet" data-original-title="Remover pet" type="button" data-toggle="tooltip" data-placement="top" title="">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>

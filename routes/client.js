@@ -23,7 +23,7 @@ router.get('/pets', (req, res, next) => {
             if (!err) {
                 body.rows.forEach((pet) => {
                     if(pet.value.id_user == idUser)
-                        pets.push(pet.value);
+                        pets.push(pet);
                 });
                 console.log(pets);
                 res.render('pets', {title: 'O meus pets', pets: pets, idUser: idUser, sess: sess});
@@ -51,7 +51,21 @@ router.get('/pets/edit', (req, res, next) => {
             console.log(body.rows[0]);
             res.render('edit_pet', {title: 'Editar Pet', pet: pet, sess: sess});
         });        
-    }
+    } else 
+        res.redirect('/');
+});
+
+router.get('/pets/delete', (req, res, next) => {
+    let sess = req.session;
+    if (sess.Type == 'user') {
+        let id = req.query.id;
+        let rev = req.query.rev;
+        let idUser = req.query.idUser;
+        conn.destroy(id, rev, (err, body) => {
+            res.redirect('/client/pets?idUser=' + idUser);
+        });
+    } else 
+        res.redirect('/');
 });
 
 router.post('/edit_pet', (req, res, next) => {
