@@ -225,7 +225,7 @@ router.post('/register_client', (req, res, next) => {
                 } else {
                     conn.insert({
                         Id_User: fields['id'],
-                        Type: 'admin',
+                        Type: 'user',
                         Name: fields['nome'],
                         Password: fields['pass'],
                         Phone: fields['telefone'],
