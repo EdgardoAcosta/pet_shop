@@ -35,7 +35,11 @@ $(document).ready(function () {
                 toastr.success(result.msg);
                 //Delay to show message of welcomeback
                 setTimeout(function () {
-                    window.location.replace("/");
+                    if (result.userType == 'user'){
+                        window.location.replace("/");
+                    }else {
+                        window.location.replace("/admin");
+                    }
                 }, 200);
 
             }

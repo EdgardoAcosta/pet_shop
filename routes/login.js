@@ -31,7 +31,10 @@ function get_user(req, res, user, password) {
                     else {
                         console.log(err);
                     }
-                    res.send({status: 0, msg: "Welcome back " + (body.rows[0].value.Name).toUpperCase()});
+                    res.send({
+                        status: 0, msg: "Welcome back " + (body.rows[0].value.Name).toUpperCase(),
+                        userType:body.rows[0].value.Type
+                    });
                 });
             }
             else {
